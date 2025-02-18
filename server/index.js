@@ -20,6 +20,10 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
+const authRoutes = require('./routes/auth');
+
+app.use('/api/auth', authRoutes);
+
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'FitAI API is running' });
 });
