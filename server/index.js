@@ -21,8 +21,10 @@ db.once('open', () => {
 });
 
 const authRoutes = require('./routes/auth');
+const workoutRoutes = require('./routes/workouts');
 
 app.use('/api/auth', authRoutes);
+app.use('/api/workouts', workoutRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'FitAI API is running' });
