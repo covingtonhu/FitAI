@@ -1,29 +1,41 @@
 import React from 'react';
-import { Container, Typography, Box, Button, Grid, Card, CardContent } from '@mui/material';
+import { Container, Typography, Box, Button, Grid, Card, CardContent, AppBar, Toolbar } from '@mui/material';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 
-const HomePage = () => {
+const HomePage = ({ user, onLogout }) => {
   return (
-    <Container maxWidth="lg">
-      <Box sx={{ my: 4 }}>
-        <Box sx={{ textAlign: 'center', mb: 6 }}>
-          <FitnessCenterIcon sx={{ fontSize: 60, color: 'primary.main', mb: 2 }} />
-          <Typography variant="h2" component="h1" gutterBottom>
+    <>
+      <AppBar position="static">
+        <Toolbar>
+          <FitnessCenterIcon sx={{ mr: 2 }} />
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             FitAI
           </Typography>
-          <Typography variant="h5" component="h2" color="text.secondary" gutterBottom>
-            Your Personal AI Fitness Assistant
+          <Typography variant="body1" sx={{ mr: 2 }}>
+            Welcome, {user?.username}!
           </Typography>
-          <Typography variant="body1" sx={{ mt: 2, mb: 4 }}>
-            Get personalized workout plans, track your progress, and achieve your fitness goals with AI-powered guidance.
-          </Typography>
-          <Button variant="contained" size="large" sx={{ mr: 2 }}>
-            Get Started
+          <Button color="inherit" onClick={onLogout}>
+            Logout
           </Button>
-          <Button variant="outlined" size="large">
-            Learn More
-          </Button>
-        </Box>
+        </Toolbar>
+      </AppBar>
+
+      <Container maxWidth="lg">
+        <Box sx={{ my: 4 }}>
+          <Box sx={{ textAlign: 'center', mb: 6 }}>
+            <Typography variant="h3" component="h1" gutterBottom>
+              Your Fitness Dashboard
+            </Typography>
+            <Typography variant="h6" component="h2" color="text.secondary" gutterBottom>
+              Ready to start your workout journey?
+            </Typography>
+            <Button variant="contained" size="large" sx={{ mr: 2 }}>
+              Generate New Workout
+            </Button>
+            <Button variant="outlined" size="large">
+              View My Workouts
+            </Button>
+          </Box>
 
         <Grid container spacing={4}>
           <Grid item xs={12} md={4}>
@@ -65,6 +77,7 @@ const HomePage = () => {
         </Grid>
       </Box>
     </Container>
+    </>
   );
 };
 
