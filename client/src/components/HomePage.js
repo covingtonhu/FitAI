@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Typography, Box, Button, Grid, Card, CardContent, AppBar, Toolbar } from '@mui/material';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import WorkoutList from './workouts/WorkoutList';
+import WorkoutGeneratorForm from './workouts/WorkoutGeneratorForm';
 
 const HomePage = ({ user, onLogout }) => {
+  const [currentView, setCurrentView] = useState('dashboard');
+  const [generatorOpen, setGeneratorOpen] = useState(false);
   return (
     <>
       <AppBar position="static">
@@ -29,54 +33,76 @@ const HomePage = ({ user, onLogout }) => {
             <Typography variant="h6" component="h2" color="text.secondary" gutterBottom>
               Ready to start your workout journey?
             </Typography>
-            <Button variant="contained" size="large" sx={{ mr: 2 }}>
+            <Button
+              variant="contained"
+              size="large"
+              sx={{ mr: 2 }}
+              onClick={() => setGeneratorOpen(true)}
+            >
               Generate New Workout
             </Button>
-            <Button variant="outlined" size="large">
+            <Button
+              variant="outlined"
+              size="large"
+              onClick={() => setCurrentView('workouts')}
+            >
               View My Workouts
             </Button>
           </Box>
 
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Personalized Plans
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  AI creates custom workout routines based on your fitness level, goals, and available time.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Progress Tracking
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Monitor your improvements with detailed analytics and performance insights.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Smart Adjustments
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Plans automatically adapt based on your progress and feedback.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-      </Box>
-    </Container>
+          {currentView === 'dashboard' && (
+            <Grid container spacing={4}>
+              <Grid item xs={12} md={4}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="h6" gutterBottom>
+                      Personalized Plans
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      AI creates custom workout routines based on your fitness level, goals, and available time.
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="h6" gutterBottom>
+                      Progress Tracking
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Monitor your improvements with detailed analytics and performance insights.
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="h6" gutterBottom>
+                      Smart Adjustments
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Plans automatically adapt based on your progress and feedback.
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
+          )}
+        </Box>
+      </Container>
+
+      {currentView === 'workouts' && <WorkoutList />}
+
+      <WorkoutGeneratorForm
+        open={generatorOpen}
+        onClose={() => setGeneratorOpen(false)}
+        onWorkoutGenerated={() => {
+          setGeneratorOpen(false);
+          setCurrentView('workouts');
+        }}
+      />
     </>
   );
 };
